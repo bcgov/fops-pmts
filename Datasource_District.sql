@@ -35,8 +35,7 @@ Select
 	, ggpu.Name div_name
 	, ggpu.ShortName div_sname 
 	, pmd.Comment 
-	, CONCAT('#', right(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),2),substring(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),5,2),substring(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),3,2)) risk_hex_color
-	, case when pmd.RiskRatingID ='1' then '#FFFFFF' else '#000000' end foreground_color
+	,  rr.Colour risk_color
 
 	from PerformanceMeasure pm
 left join PerformanceMeasureOrgUnit pmo on (pmo.PerformanceMeasureID = pm.PerformanceMeasureID)
