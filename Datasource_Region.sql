@@ -48,6 +48,5 @@ where 1=1
 and ( (pm.Description like '%Completion%' or pm.Description like '%Cutting%' or pm.Description like '%Range Act%' )
 		and (pmo.IsRootLevel= '0')
 )
-and (pm.Description not like '%DO NOT USE%')
 and ou.Name not like '% Area' and ou.Name not like '% Divisions'
 ;
