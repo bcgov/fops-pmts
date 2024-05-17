@@ -2,7 +2,7 @@
 
 Select 
  fp.Description performance_period
-,fp.FiscalYearID, concat(fp.FiscalYearID-1 ,'-',right(fp.FiscalYearID,2)) as fiscal_year_yy
+,fp.FiscalYearID
 , ou.Name as district_name
 , ou.ShortName as district_code
 , pmo.OrgUnitID district_id
