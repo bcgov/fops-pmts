@@ -3,11 +3,7 @@
 Select 
 	 fp.Description performance_period
 	,fp.FiscalYearID, concat(fp.FiscalYearID-1 ,'-',right(fp.FiscalYearID,2)) as fiscal_year_yy
-	,case when ou.org_name_new = 'North Island Central Coast' then 'North Island - Central Coast' 
-	when ou.org_name_new = 'Skeena/Stikine' then 'Skeena Stikine' 
-	when ou.org_name_new = 'Coast Mountain' then 'Coast Mountains' 
-	else ou.org_name_new 
-	end as district_name
+	, ou.Name as district_name
 	, ou.ShortName as district_code
 	, pmo.OrgUnitID district_id
 	, fp.ShortDescription
@@ -43,12 +39,8 @@ left join PerformanceMeasureData pmd  on (pmo.PerformanceMeasureOrgUnitID = pmd.
 	left join DataEntryPeriod dp on (pmd.DataEntryPeriodID = dp.DataEntryPeriodID)
 	left join FiscalPeriod fp on (fp.FiscalPeriodID = dp.FiscalPeriodID)
 	left join FiscalYearTarget fyt on (fyt.FiscalYearID = fp.FiscalYearID  and fyt.PerformanceMeasureID = pm.PerformanceMeasureID)
-	left join (
-		Select *, rtrim(replace( ou.Name,	substring(ou.Name, CHARINDEX('(', ou.Name),	CHARINDEX(')', ou.Name) -CHARINDEX('(', ou.Name)+1),'' )) org_name_new
-		from OrgUnit ou
-		) ou on (ou.OrgUnitID = pmo.OrgUnitID)
+	left join OrgUnit ou on (ou.OrgUnitID = pmo.OrgUnitID)
 	left join RiskRating rr on (pmd.RiskRatingID = rr.RiskRatingID)
-
 	left join OrgUnit pu on (ou.ParentOrgUnitID = pu.OrgUnitID)
 	left join OrgUnit gpu on (pu.ParentOrgUnitID = gpu.OrgUnitID)
 	left join OrgUnit ggpu on (gpu.ParentOrgUnitID = ggpu.OrgUnitID)
