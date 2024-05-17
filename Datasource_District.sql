@@ -37,7 +37,6 @@ Select
 	, pmd.Comment 
 	, CONCAT('#', right(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),2),substring(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),5,2),substring(CONVERT( char(8), CONVERT(VARBINARY(8), rr.Colour), 2),3,2)) risk_hex_color
 	, case when pmd.RiskRatingID ='1' then '#FFFFFF' else '#000000' end foreground_color
-	, ROW_NUMBER() over(partition by pm.PerformanceMeasureID,ou.ShortName,fp.ShortDescription order by fp.StartDate, fp.EndDate) rn
 	,case when fp.StartDate<=CAST( GETDATE() AS Date ) and fp.EndDate>=CAST( GETDATE() AS Date ) then 'Y' else 'N' end as current_qtr_ind
 	from PerformanceMeasure pm
 left join PerformanceMeasureOrgUnit pmo on (pmo.PerformanceMeasureID = pm.PerformanceMeasureID)
