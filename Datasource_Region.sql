@@ -1,10 +1,5 @@
 --Sql.Database - rightsideup\infrasp1 Region query
 
-Select case when rn>=5 then sum(numerator) over(partition by PerformanceMeasureID,district_code,ShortDescription  order by startdate
-rows between 4 preceding and current row )/5  else 0 end as running_5yr_sum_nmrtr, 
-case when rn>=5 then sum(Denominator) over(partition by PerformanceMeasureID,district_code,ShortDescription  order by startdate
-rows between 4 preceding and current row ) /5 else 0 end as running_5yr_sum_dmntr, Denominator - Numerator as stackeddiff,
-a.* from (
 Select 
  fp.Description performance_period
 ,fp.FiscalYearID, concat(fp.FiscalYearID-1 ,'-',right(fp.FiscalYearID,2)) as fiscal_year_yy
@@ -66,5 +61,4 @@ and ( (pm.Description like '%Completion%' or pm.Description like '%Cutting%' or 
 )
 and (pm.Description not like '%DO NOT USE%')
 and ou.Name not like '% Area' and ou.Name not like '% Divisions'
-) a
 ;
