@@ -1,8 +1,8 @@
 --Sql.Database - rightsideup\infrasp1 Area query
 
 Select 
- fp.Description performance_period
-,fp.FiscalYearID
+  fp.Description performance_period
+, fp.FiscalYearID
 , ou.Name as area_name
 , ou.ShortName as area_code
 , pmo.OrgUnitID area_id
@@ -28,7 +28,28 @@ Select
 , gpu.Name ministry_name
 , gpu.ShortName ministry_sname
 , pmd.Comment 
-,  rr.Colour risk_color
+, rr.Colour risk_color
+
+, pm.NumeratorUnit
+, pm.DenominatorUnit
+, pm.OptimizationDirectionID
+, op.Description Optimization_direction
+, st.Description status
+, pm.CalculationTypeID CalcNum
+, ctp.Description as CalcType
+, pm.CalculationClassID
+, cc.Description as CalcClass
+, fyt.TargetNumber
+, rr.RiskRatingID riskRatingNum
+, rr.Description RiskRatingDescription
+, rr.ShortDescription RiskRatingShortDescription
+, pm.SourceID
+, src.Description SourceName
+, src.ShortName SourceShortName
+, pm.FunctionMapID SubfunctionID
+, fmp.Description Subfunction
+, fmpp.Description as "Function"
+, fmpt.Description Theme
 from PerformanceMeasure pm
 left join PerformanceMeasureOrgUnit pmo on (pmo.PerformanceMeasureID = pm.PerformanceMeasureID)
 left join PerformanceMeasureData pmd  on (pmo.PerformanceMeasureOrgUnitID = pmd.PerformanceMeasureOrgUnitID)
