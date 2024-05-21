@@ -74,6 +74,5 @@ left join FunctionMap fmpp on (fmpp.FunctionMapID = fmp.ParentFunctionMapID)
 left join FunctionMap fmpt on (fmpt.FunctionMapID = fmpp.ParentFunctionMapID)
 
 where 1=1 
-and ( (pm.Description like '%Completion%' or pm.Description like '%Cutting%' or pm.Description like '%Range Act%' )
-		and (pmo.IsRootLevel= '0')
-);
+and (pmo.IsRootLevel= '0')
+;
