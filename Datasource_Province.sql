@@ -6,6 +6,8 @@ Select
 , ou.Name as div_name
 , ou.ShortName as div_code
 , pmo.OrgUnitID div_id
+, ou.OrgUnitTypeID
+, ogt.Description orgunit_type_name
 , fp.ShortDescription
 , fp.StartDate
 , fp.EndDate
@@ -45,7 +47,7 @@ Select
 , src.ShortName SourceShortName
 , pm.FunctionMapID SubfunctionID
 , fmp.Description Subfunction
-, fmpp.Description as "Function"
+, fmpp.Description Functn
 , fmpt.Description Theme
 	
 from PerformanceMeasure pm
@@ -55,6 +57,7 @@ left join DataEntryPeriod dp on (pmd.DataEntryPeriodID = dp.DataEntryPeriodID)
 left join FiscalPeriod fp on (fp.FiscalPeriodID = dp.FiscalPeriodID)
 left join FiscalYearTarget fyt on (fyt.FiscalYearID = fp.FiscalYearID  and fyt.PerformanceMeasureID = pm.PerformanceMeasureID)
 left join OrgUnit ou on (ou.OrgUnitID = pmo.OrgUnitID)
+left join OrgUnitType ogt on (ogt.OrgUnitTypeID = ou.OrgUnitTypeID)
 left join RiskRating rr on (pmd.RiskRatingID = rr.RiskRatingID)
 left join OrgUnit pu on (ou.ParentOrgUnitID = pu.OrgUnitID)
 left join OrgUnit gpu on (pu.ParentOrgUnitID = gpu.OrgUnitID)
@@ -69,5 +72,4 @@ left join FunctionMap fmpp on (fmpp.FunctionMapID = fmp.ParentFunctionMapID)
 left join FunctionMap fmpt on (fmpt.FunctionMapID = fmpp.ParentFunctionMapID)
 
 where 1=1 
-and (pmo.IsRootLevel= '0')
 ;

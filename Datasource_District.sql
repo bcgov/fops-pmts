@@ -5,6 +5,8 @@ Select
 	,fp.FiscalYearID
 	, ou.Name as district_name
 	, ou.ShortName as district_code
+	, ou.OrgUnitTypeID
+	, ogt.Description orgunit_type_name
 	, pmo.OrgUnitID district_id
 	, fp.ShortDescription
 	, fp.StartDate
@@ -51,7 +53,7 @@ Select
 	,src.ShortName SourceShortName
 	,pm.FunctionMapID SubfunctionID
 	,fmp.Description Subfunction
-	,fmpp.Description as "Function"
+	,fmpp.Description Functn
 	,fmpt.Description Theme
 	from PerformanceMeasure pm
 left join PerformanceMeasureOrgUnit pmo on (pmo.PerformanceMeasureID = pm.PerformanceMeasureID)
@@ -60,6 +62,7 @@ left join PerformanceMeasureData pmd  on (pmo.PerformanceMeasureOrgUnitID = pmd.
 	left join FiscalPeriod fp on (fp.FiscalPeriodID = dp.FiscalPeriodID)
 	left join FiscalYearTarget fyt on (fyt.FiscalYearID = fp.FiscalYearID  and fyt.PerformanceMeasureID = pm.PerformanceMeasureID)
 	left join OrgUnit ou on (ou.OrgUnitID = pmo.OrgUnitID)
+	left join OrgUnitType ogt on (ogt.OrgUnitTypeID = ou.OrgUnitTypeID)
 	left join RiskRating rr on (pmd.RiskRatingID = rr.RiskRatingID)
 	left join OrgUnit pu on (ou.ParentOrgUnitID = pu.OrgUnitID)
 	left join OrgUnit gpu on (pu.ParentOrgUnitID = gpu.OrgUnitID)
@@ -75,5 +78,4 @@ left join PerformanceMeasureData pmd  on (pmo.PerformanceMeasureOrgUnitID = pmd.
 	left join FunctionMap fmpt on (fmpt.FunctionMapID = fmpp.ParentFunctionMapID)
 
 	where 1=1 
-	and (pmo.IsRootLevel= '1')
 ;
